@@ -4,6 +4,12 @@ addons:
     - openjdk-6-jdk
 after_success:
 - mvn clean test jacoco:report coveralls:report -Ptravis-jacoco
+before_install:
+- wget https://archive.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip
+  -P ./target
+- unzip -qq ./target/apache-maven-3.2.5-bin.zip -d ./target
+- export M2_HOME=$PWD/target/apache-maven-3.2.5
+- export PATH=$M2_HOME/bin:$PATH
 jdk:
 - oraclejdk8
 language: java
