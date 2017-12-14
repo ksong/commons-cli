@@ -1,3 +1,7 @@
+addons:
+  apt:
+    packages:
+    - openjdk-6-jdk
 after_success:
 - mvn clean test jacoco:report coveralls:report -Ptravis-jacoco
 jdk:
