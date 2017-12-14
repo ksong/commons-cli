@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
@@ -193,7 +192,7 @@
   </properties>
 
   <build>
-    <defaultGoal>clean verify apache-rat:check clirr:check checkstyle:check findbugs:check javadoc:javadoc</defaultGoal>
+    <defaultGoal>clean verify apache-rat:check clirr:check javadoc:javadoc</defaultGoal>
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -214,7 +213,9 @@
           <configuration>
             <excludes>
               <exclude>src/site/resources/.htaccess</exclude>
-            </excludes>
+            <exclude>**/.travis.yml</exclude>
+                            <exclude>**/NOW</exclude>
+                        </excludes>
           </configuration>
         </plugin>
         <plugin>
@@ -224,26 +225,6 @@
             <ignorePathsToDelete>
               <ignorePathToDelete>javadocs**</ignorePathToDelete>
             </ignorePathsToDelete>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>2.15</version>
-          <configuration>
-            <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
-            <enableRulesSummary>false</enableRulesSummary>
-            <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
-          <version>${commons.findbugs.version}</version>
-          <configuration>
-            <threshold>Normal</threshold>
-            <effort>Default</effort>
-            <excludeFilterFile>${basedir}/src/conf/findbugs-exclude-filter.xml</excludeFilterFile>
           </configuration>
         </plugin>
       </plugins>
@@ -282,7 +263,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-        <version>${commons.findbugs.version}</version>
+        <version>3.0.1</version>
         <configuration>
           <threshold>Normal</threshold>
           <effort>Default</effort>
@@ -342,18 +323,18 @@
                 <configuration>
                   <tasks>
                     <exec executable="svn">
-                      <arg line="checkout --depth immediates ${commons.scmPubUrl} ${commons.scmPubCheckoutDirectory}" />
+                      <arg line="checkout --depth immediates ${commons.scmPubUrl} ${commons.scmPubCheckoutDirectory}"/>
                     </exec>
 
                     <exec executable="svn">
-                      <arg line="update --set-depth exclude ${commons.scmPubCheckoutDirectory}/javadocs" />
+                      <arg line="update --set-depth exclude ${commons.scmPubCheckoutDirectory}/javadocs"/>
                     </exec>
 
                     <pathconvert pathsep=" " property="dirs">
-                      <dirset dir="${commons.scmPubCheckoutDirectory}" includes="*" />
+                      <dirset dir="${commons.scmPubCheckoutDirectory}" includes="*"/>
                     </pathconvert>
                     <exec executable="svn">
-                      <arg line="update --set-depth infinity ${dirs}" />
+                      <arg line="update --set-depth infinity ${dirs}"/>
                     </exec>
                   </tasks>
                 </configuration>
@@ -366,3 +347,4 @@
   </profiles>
 
 </project>
+
